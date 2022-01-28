@@ -1,12 +1,67 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Login = () => {
+
+    const {push} = useHistory();
+
+    const [creds, setCreds] = useState({
+        username: '',
+        password: ''
+    })
+
+    const handleChange = (e) => {
+        setCreds({
+            ...creds,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        //console.log('fjdhsfhkjsdhfjkd');
+        axios.post('http://localhost:5000/api/login', creds)
+            .then(resp =>{
+                //console.log(resp.data.token);
+                localStorage.setItem('token', resp.data.token)
+                push('/view');
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+    }
+
+    //console.log(creds);
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <div>
+                <h1>Login</h1>
+                <form onSubmit={handleSubmit}>
+                    Username:
+                    <input
+                        type="text"
+                        name="username"
+                        value={creds.username}
+                        onChange={handleChange}
+                    />
+                    <br/>
+                    Password:
+                    <input
+                        type="password"
+                        name="password"
+                        value={creds.password}
+                        onChange={handleChange}
+                    />
+                    <br/>
+                <button>Submit</button>
+                </form>
+                <p id='error'>Error:</p>
+            </div>
         </ModalContainer>
     </ComponentContainer>);
 }
@@ -20,6 +75,22 @@ export default Login;
 //4. When login form is submitted, make an http call to the login route. Save the auth token on a successful response and redirect to view page.
 //5. If the response is not successful, display an error statement. **a server provided error message can be found in ```err.response.data```**
 //6. MAKE SURE TO ADD id="username", id="password", id="error" AND id="submit" TO THE APPROPRIATE DOM ELEMENTS. YOUR AUTOTESTS WILL FAIL WITHOUT THEM.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const ComponentContainer = styled.div`
     height: 70%;
