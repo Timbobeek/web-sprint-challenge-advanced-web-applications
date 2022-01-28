@@ -12,6 +12,10 @@ const Login = () => {
         password: ''
     })
 
+    const [error, setError] = useState({
+        errorMessage: ''
+    });
+
     const handleChange = (e) => {
         setCreds({
             ...creds,
@@ -30,6 +34,7 @@ const Login = () => {
             })
             .catch(err=>{
                 console.log(err);
+                setError({errorMessage: '**a server provided error message can be found in ```err.response.data```**'});
             })
     }
 
@@ -44,6 +49,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     Username:
                     <input
+                        id='username'
                         type="text"
                         name="username"
                         value={creds.username}
@@ -52,15 +58,16 @@ const Login = () => {
                     <br/>
                     Password:
                     <input
+                        id='password'
                         type="password"
                         name="password"
                         value={creds.password}
                         onChange={handleChange}
                     />
                     <br/>
-                <button>Submit</button>
+                <button id='submit'>Submit</button>
                 </form>
-                <p id='error'>Error:</p>
+                <p id='error'>{error.errorMessage}</p>
             </div>
         </ModalContainer>
     </ComponentContainer>);
@@ -75,21 +82,6 @@ export default Login;
 //4. When login form is submitted, make an http call to the login route. Save the auth token on a successful response and redirect to view page.
 //5. If the response is not successful, display an error statement. **a server provided error message can be found in ```err.response.data```**
 //6. MAKE SURE TO ADD id="username", id="password", id="error" AND id="submit" TO THE APPROPRIATE DOM ELEMENTS. YOUR AUTOTESTS WILL FAIL WITHOUT THEM.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const ComponentContainer = styled.div`
