@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
 
 import Article from './Article';
@@ -12,7 +13,17 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+    const {id} = useParams();
+
     const handleDelete = (id) => {
+        axiosWithAuth().delete(`/articles/${id}`)   ////concern: I might need to make id dynamic, make a new const or use editId perhaps?
+        .then(res => {
+            // console.log(res)  deletes movies
+            setArticles(articles.filter(item=>(item.id !== id)));   /// this works! deletes movies once the button is clicked. yay
+        })
+        .catch(err =>{
+            console.log(err)
+        })
     }
 
     const handleEdit = (article) => {
@@ -27,6 +38,7 @@ const View = (props) => {
         setEditing(false);
     }
 
+    //Concern is about this one below
     useEffect(()=>{
         axiosWithAuth().get('/articles')
         .then(res => {
@@ -61,9 +73,9 @@ const View = (props) => {
 export default View;
 
 //Task List:
-//1. Build and import axiosWithAuth module in the utils.
-//2. When the component mounts, make an http request that adds all articles to state.
-//3. Complete handleDelete method. It should make a request that delete the article with the included id.
+//done//1. Build and import axiosWithAuth module in the utils.
+//done//2. When the component mounts, make an http request that adds all articles to state.  Concern: did the useEffect I built above accomplish what they asked for?
+//done//3. Complete handleDelete method. It should make a request that delete the article with the included id.
 //4. Complete handleEdit method. It should make a request that updates the article that matches the included article param.
 
 
