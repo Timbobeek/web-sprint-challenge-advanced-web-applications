@@ -17,9 +17,25 @@ const testArticle = {
   author: 'Jim Jackson'
 }
 
+const testArticleTwo = {
+  id: '',
+  headline: 'Timmy is the best',
+  createdOn: '',
+  summary: '',
+  body: '',
+  author: ''
+}
+
+
+//// test 1----------------------------------------
+
 test('renders component without errors', ()=> {
   render(<Article article={testArticle}/>);
 });
+
+
+
+////test 2-------------------------------------------
 
 test('renders headline, author from the article when passed in through props', ()=> {
   render(<Article article={testArticle}/>);
@@ -32,9 +48,18 @@ test('renders headline, author from the article when passed in through props', (
 
 });
 
+////test 3 ---------------------------------------------------
+
 test('renders "Associated Press" when no author is given', ()=> {
-  render(<Article article={testArticle}/>);
+  render(<Article article={testArticleTwo}/>);
+
+  const defaultAuthor = screen.queryByText(/associated press/i)
+
+  expect(defaultAuthor).toBeVisible();
 });
+
+
+///// test 4 --------------------------------------------------------
 
 test('executes handleDelete when the delete button is pressed', ()=> {
   const handleDelete = jest.fn();
