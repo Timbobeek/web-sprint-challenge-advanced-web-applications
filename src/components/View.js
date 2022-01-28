@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Article from './Article';
 import EditForm from './EditForm';
 
 import axiosWithAuth from '../utils/axiosWithAuth';
+import axios from 'axios';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
@@ -25,6 +26,17 @@ const View = (props) => {
     const handleEditCancel = ()=>{
         setEditing(false);
     }
+
+    useEffect(()=>{
+        axiosWithAuth().get('/articles')
+        .then(res => {
+            //console.log(res.data);    works!!!
+            setArticles(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    },[]);
 
     return(<ComponentContainer>
         <HeaderContainer>View Articles</HeaderContainer>
