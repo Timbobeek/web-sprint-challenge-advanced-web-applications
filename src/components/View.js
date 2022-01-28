@@ -13,6 +13,8 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+   
+
     const {id} = useParams();
 
     const handleDelete = (id) => {
@@ -27,6 +29,15 @@ const View = (props) => {
     }
 
     const handleEdit = (article) => {
+        axiosWithAuth().put(`/articles/${editId}`, article)
+        .then(res=>{
+            //console.log(res); edits articles!
+            setArticles(res.data);
+            setEditing(false);
+        })
+        .catch(err=>{
+            console.log(err)
+        })
     }
 
     const handleEditSelect = (id)=> {
