@@ -5,8 +5,19 @@ import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
 
 import Article from './Article';
+// import { render } from 'express/lib/response';
+import {render} from '@testing-library/react';
+
+const testArticle = {
+  id: '',
+  headline: '',
+  createdOn: '',
+  summary: '',
+  body: ''
+}
 
 test('renders component without errors', ()=> {
+  render(<Article article={testArticle}/>);
 });
 
 test('renders headline, author from the article when passed in through props', ()=> {
