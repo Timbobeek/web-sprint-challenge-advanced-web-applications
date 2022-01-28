@@ -6,14 +6,15 @@ import MutationObserver from 'mutationobserver-shim';
 
 import Article from './Article';
 // import { render } from 'express/lib/response';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 
 const testArticle = {
   id: '',
-  headline: '',
+  headline: 'Timmy is the best',
   createdOn: '',
   summary: '',
-  body: ''
+  body: '',
+  author: 'Jim Jackson'
 }
 
 test('renders component without errors', ()=> {
@@ -21,12 +22,31 @@ test('renders component without errors', ()=> {
 });
 
 test('renders headline, author from the article when passed in through props', ()=> {
+  render(<Article article={testArticle}/>);
+
+  const headlineText = screen.queryByText(/timmy is the best/i)
+  const authorText = screen.queryByText(/jim jackson/i)
+
+  expect(headlineText).toBeInTheDocument();
+  expect(authorText).toBeInTheDocument();
+
 });
 
 test('renders "Associated Press" when no author is given', ()=> {
+  render(<Article article={testArticle}/>);
 });
 
 test('executes handleDelete when the delete button is pressed', ()=> {
+  const handleDelete = jest.fn();
+  
+  render(<Article article={testArticle} handleDelete={handleDelete}/>);
+
+  const button = screen.getByTestId('deleteButton');
+  userEvent.click(button);
+
+  const article = screen.findByTestId('article')
+  expect(article).not.toBeInTheDocument();
+  
 });
 
 //Task List: 

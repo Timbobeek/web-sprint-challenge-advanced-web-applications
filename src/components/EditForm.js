@@ -4,6 +4,7 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 
 const initialArticle = {
     id:"",
+    author: "",
     headline: "",
     author: "",
     summary: "",
@@ -35,7 +36,7 @@ const EditForm = (props)=> {
     useEffect(()=>{
         axiosWithAuth().get(`/articles/${editId}`)
         .then(res => {
-            //console.log(res)   works!!!
+            //console.log(res)   //works!!!
             setArticle(res.data);
         })
         .catch(err =>{
