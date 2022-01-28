@@ -12,9 +12,3 @@ const axiosWithAuth = ()=> {
 
 export default axiosWithAuth;
 
-
-
-//check if the way to get to the token is the same here!!!!!!!!!!!!!!!
-
-//Task List:
-//1. Complete axiosWithAuth

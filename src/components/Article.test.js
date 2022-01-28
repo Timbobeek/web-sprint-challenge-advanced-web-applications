@@ -5,9 +5,7 @@ import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
 
 import Article from './Article';
-import { Router } from 'express';
-import View from './View';
-// import { render } from 'express/lib/response';
+
 import {render, screen, waitFor} from '@testing-library/react';
 
 const testArticle = {

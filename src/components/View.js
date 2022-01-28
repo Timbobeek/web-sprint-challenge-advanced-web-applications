@@ -6,7 +6,6 @@ import Article from './Article';
 import EditForm from './EditForm';
 
 import axiosWithAuth from '../utils/axiosWithAuth';
-import axios from 'axios';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
@@ -18,10 +17,9 @@ const View = (props) => {
     const {id} = useParams();
 
     const handleDelete = (id) => {
-        axiosWithAuth().delete(`/articles/${id}`)   ////concern: I might need to make id dynamic, make a new const or use editId perhaps?
+        axiosWithAuth().delete(`/articles/${id}`) 
         .then(res => {
-            // console.log(res)  deletes movies
-            setArticles(articles.filter(item=>(item.id !== id)));   /// this works! deletes movies once the button is clicked. yay
+            setArticles(articles.filter(item=>(item.id !== id)));
         })
         .catch(err =>{
             console.log(err)
@@ -31,7 +29,6 @@ const View = (props) => {
     const handleEdit = (article) => {
         axiosWithAuth().put(`/articles/${editId}`, article)
         .then(res=>{
-            //console.log(res); edits articles!
             setArticles(res.data);
             setEditing(false);
         })
@@ -49,11 +46,9 @@ const View = (props) => {
         setEditing(false);
     }
 
-    //Concern is about this one below
     useEffect(()=>{
         axiosWithAuth().get('/articles')
         .then(res => {
-            //console.log(res.data);    works!!!
             setArticles(res.data);
         })
         .catch(err => {
@@ -82,12 +77,6 @@ const View = (props) => {
 }
 
 export default View;
-
-//Task List:
-//done//1. Build and import axiosWithAuth module in the utils.
-//done//2. When the component mounts, make an http request that adds all articles to state.  Concern: did the useEffect I built above accomplish what they asked for?
-//done//3. Complete handleDelete method. It should make a request that delete the article with the included id.
-//4. Complete handleEdit method. It should make a request that updates the article that matches the included article param.
 
 
 const Container = styled.div`
