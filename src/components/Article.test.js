@@ -5,11 +5,13 @@ import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
 
 import Article from './Article';
+import { Router } from 'express';
+import View from './View';
 // import { render } from 'express/lib/response';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 
 const testArticle = {
-  id: '',
+  id: 1,
   headline: 'Timmy is the best',
   createdOn: '',
   summary: '',
@@ -61,7 +63,7 @@ test('renders "Associated Press" when no author is given', ()=> {
 
 ///// test 4 --------------------------------------------------------
 
-test('executes handleDelete when the delete button is pressed', ()=> {
+test('executes handleDelete when the delete button is pressed', async ()=> {
   const handleDelete = jest.fn();
   
   render(<Article article={testArticle} handleDelete={handleDelete}/>);
@@ -69,9 +71,9 @@ test('executes handleDelete when the delete button is pressed', ()=> {
   const button = screen.getByTestId('deleteButton');
   userEvent.click(button);
 
-  const article = screen.findByTestId('article')
-  expect(article).not.toBeInTheDocument();
-  
+  await waitFor(()=>{
+    expect(handleDelete).toHaveBeenCalled();
+  })
 });
 
 //Task List: 
