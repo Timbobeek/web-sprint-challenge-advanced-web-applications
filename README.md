@@ -118,8 +118,22 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 1. Explain what a token is used for.
 
+Tokens are strings of cryptic text that can be stored on the client-side using local or session storage. The server can readily tell the client that it issued the token. It can also read the token and make decisions for data transfer based on the client's permission. For example, when a user logs in into any site, he is given a token, this token allows the user to utilize site's pages that are only for authorized users. Once the user logs out, that token is discarded and the user cannot access those pages anymore.
+
 2. What steps can you take in your web apps to keep your data secure?
+
+Use private routes, so that only users with a token can access pages with data that we do not want to be available to all people.
 
 3. Describe how web servers work.
 
+The physical computer device that we call a web server (like the one shown below) is connected to the internet. A web server stores the code for different websites to be shared across the world at all times. When we load the code for our websites, or web apps, on a server like this, we say that the server is "hosting" our website/app. However, the server itself needs some code to tell it what to do. That software program is also called a web server. Its main purpose is to "serve" web pages it retrieves from your project code to users upon request. At the end of it, we get users on personal computers requesting stuff from the servers using internet and then retrieve needed stuff from that server.
+
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+
+C - Post
+
+R - Get
+
+U - Put
+
+D - Delete
